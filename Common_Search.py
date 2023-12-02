@@ -32,8 +32,7 @@ class Common_Search():
         el3.click()
         el4 = self.driver.find_element(by=AppiumBy.ID, value="kr.co.ssg:id/etSearchQuery")
         el4.send_keys("우유")
-        el5 = self.driver.find_element(by=AppiumBy.XPATH, value="/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout[3]/android.widget.FrameLayout/android.view.ViewGroup[1]/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/androidx.recyclerview.widget.RecyclerView/android.view.ViewGroup[2]/android.widget.TextView")
-        el5.click()
+        self.driver.press_keycode(66)
         self.driver.implicitly_wait(3)
 
     def Search_Clothes(self) -> None:
@@ -41,8 +40,6 @@ class Common_Search():
         el3 = self.driver.find_element(by=AppiumBy.ACCESSIBILITY_ID, value="검색")
         el3.click()
         el4 = self.driver.find_element(by=AppiumBy.ID, value="kr.co.ssg:id/etSearchQuery")
-        el4.send_keys("티셔츠 "+"\n")
+        el4.send_keys("티셔츠")
         self.driver.press_keycode(66)
-        #el5 = self.driver.find_element(by=AppiumBy.ID, value="kr.co.ssg:id/tvKeyword")
-        #el5.click()
         self.driver.implicitly_wait(3)
