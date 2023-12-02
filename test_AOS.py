@@ -14,6 +14,7 @@ from appium.options.android import UiAutomator2Options
 capabilities = dict(
     platformName='Android',
     platformVersion='14',
+    #appActivity='kr.co.ssg.activity.etc.MainActivity',
     app="/Users/aquinas/Downloads/SSG.COM_3.5.1_Apkpure.apk",
     ensureWebviewsHavePages= True,
     nativeWebScreenshot= True,
