@@ -5,6 +5,7 @@ from selenium.webdriver.common.by import By
 from time import sleep
 from selenium.webdriver.common.action_chains import ActionChains
 from SSG_APP_AOS.Common_splash import Common_splash
+from SSG_APP_AOS.Common_Login import Common_Login
 
 
 from appium.options.android import UiAutomator2Options
@@ -32,29 +33,15 @@ class TestAppium(unittest.TestCase):
 
 
     def test_case_01(self) -> None:
-        Common_splash.splash(self)
-
-
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
-        # 신세계 유니버스 클럽 가입 계정정보
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserPw').send_keys('Qa1324!@#')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnLogin').click()
-        self.driver.implicitly_wait(5)
-        # 회원명 노출 확인
+        Common_splash.Splash(self)
+        Common_Login.Login(self)
         assert self.driver.find_element(By.XPATH, '//android.view.View[@content-desc="김덕환 님"]').is_displayed(), "회원명 확인 실패"
+        # 회원명 노출 확인(로그인 성공)
 
 
     def test_case_02(self) -> None:
         sleep(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnConfirm').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnYes').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/ivHeader').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/bcClose').click()
-        self.driver.implicitly_wait(3)
+        Common_splash.splash(self)
         self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
         # 신세계 유니버스 클럽 가입 계정정보
         self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
