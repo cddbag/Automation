@@ -30,12 +30,11 @@ class Common_splash():
         self.driver = webdriver.Remote(appium_server_url, options=options)
 
     def Splash(self) -> None:
-        sleep(5)
+        sleep(2)
         self.driver.find_element(By.ID, 'kr.co.ssg:id/btnConfirm').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
+        self.driver.implicitly_wait(1)
         self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
         self.driver.find_element(By.ID, 'kr.co.ssg:id/btnYes').click()
         self.driver.find_element(By.ID, 'kr.co.ssg:id/ivHeader').click()
         self.driver.find_element(By.ID, 'kr.co.ssg:id/bcClose').click()
-        self.driver.implicitly_wait(3)
+        self.driver.implicitly_wait(1)

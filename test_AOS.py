@@ -6,6 +6,7 @@ from time import sleep
 from selenium.webdriver.common.action_chains import ActionChains
 from SSG_APP_AOS.Common_splash import Common_splash
 from SSG_APP_AOS.Common_Login import Common_Login
+from SSG_APP_AOS.Common_Search import Common_Search
 
 
 from appium.options.android import UiAutomator2Options
@@ -21,6 +22,7 @@ capabilities = dict(
     connectHardwareKeyboard=True
 )
 
+# app="/Users/aquinas/Downloads/SSG.COM_3.5.1_Apkpure.apk",
 appium_server_url="http://127.0.0.1:4723/wd/hub"
 
 class TestAppium(unittest.TestCase):
@@ -40,155 +42,58 @@ class TestAppium(unittest.TestCase):
 
 
     def test_case_02(self) -> None:
-        sleep(3)
-        Common_splash.splash(self)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
-        # 신세계 유니버스 클럽 가입 계정정보
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserPw').send_keys('Qa1324!@#')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnLogin').click()
-        self.driver.implicitly_wait(5)
-        # 신세계 유버 클럽 뱃지 노출 확인
+        Common_splash.Splash(self)
+        Common_Login.Login(self)
         assert self.driver.find_element(By.XPATH, '//android.view.View[@content-desc="신세계 유니버스 클럽 뱃지"]').is_displayed(), "신세계 유니버스 클럽 뱃지 노출 확인 실패"
+        # 신세계 유버 클럽 뱃지 노출 확인
 
     def test_case_03(self) -> None:
-        sleep(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnConfirm').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnYes').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/ivHeader').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/bcClose').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
-        # 신세계 유니버스 클럽 가입 계정정보
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserPw').send_keys('Qa1324!@#')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnLogin').click()
-        self.driver.implicitly_wait(5)
-        # 신유클 관리 페이지 랜딩 확인
+        Common_splash.Splash(self)
+        Common_Login.Login(self)
         self.driver.find_element(By.XPATH, '//android.view.View[@content-desc="신세계 유니버스 클럽 뱃지"]').click()
         assert self.driver.find_element(By.ID, 'kr.co.ssg:id/tvTitle').is_displayed(), "신세계 유니버스 클럽 관리 페이지 랜딩 확인 실패"
+        # 신유클 관리 페이지 랜딩 확인
 
 
     def test_case_04(self) -> None:
-        sleep(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnConfirm').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnYes').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/ivHeader').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/bcClose').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
-        # 신세계 유니버스 클럽 가입 계정정보
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserPw').send_keys('Qa1324!@#')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnLogin').click()
-        self.driver.implicitly_wait(5)
-        # 회원 등급 뱃지 노출 확인
+        Common_splash.Splash(self)
+        Common_Login.Login(self)
         assert self.driver.find_element(By.XPATH, '//android.view.View[@content-desc="VIP 등급 뱃지"]').is_displayed(), "등급 뱃지 노출 확인 실패"
+        # 회원 등급 뱃지 노출 확인
 
 
     def test_case_05(self) -> None:
-        sleep(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnConfirm').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnYes').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/ivHeader').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/bcClose').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
-        # 신세계 유니버스 클럽 가입 계정정보
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserPw').send_keys('Qa1324!@#')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnLogin').click()
-        self.driver.implicitly_wait(5)
+        Common_splash.Splash(self)
+        Common_Login.Login(self)
         self.driver.find_element(By.XPATH, '//android.view.View[@content-desc="VIP 등급 뱃지"]').click()
-        self.driver.implicitly_wait(5)
-        # 유니버스 클럽 스탬프 페이지 랜딩 확인
+        self.driver.implicitly_wait(2)
         assert self.driver.find_element(By.ID, 'kr.co.ssg:id/tvTitle').is_displayed(), "유니버스 클럽 스탬프 페이지 랜딩 실패"
+        # 유니버스 클럽 스탬프 페이지 랜딩 확인
 
   
 
     def test_case_06(self) -> None:
-        sleep(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnConfirm').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnYes').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/ivHeader').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/bcClose').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
-        # 신세계 유니버스 클럽 가입 계정정보
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserPw').send_keys('Qa1324!@#')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnLogin').click()
-        self.driver.implicitly_wait(5)
+        Common_splash.Splash(self)
+        Common_Login.Login(self)
         # 멤버십 쿠폰 버튼 노출 확인
         assert self.driver.find_element(By.XPATH, '//android.view.View[@content-desc="멤버십쿠폰"]').is_displayed(), "멤버십쿠폰 노출 확인 실패"
         
 
     def test_case_07(self) -> None:
-        sleep(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnConfirm').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnYes').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/ivHeader').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/bcClose').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
-        # 신세계 유니버스 클럽 가입 계정정보
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserPw').send_keys('Qa1324!@#')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnLogin').click()
-        self.driver.implicitly_wait(5)
+        Common_splash.Splash(self)
+        Common_Login.Login(self)
         assert self.driver.find_element(By.ID, 'kr.co.ssg:id/sdvBlurBackground2').is_displayed(), "신유클 배경 미노출"
         # 신유클 배경 노출 확인
 
     def test_case_08(self) -> None:
-        sleep(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnConfirm').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnYes').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/ivHeader').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/bcClose').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
-        # 신세계 유니버스 클럽 가입 계정정보
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserPw').send_keys('Qa1324!@#')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnLogin').click()
-        self.driver.implicitly_wait(5)
+        Common_splash.Splash(self)
+        Common_Login.Login(self)
         assert self.driver.find_element(By.XPATH, '//android.view.View[@content-desc="고객님께 1년동안 멤버십VIP 혜택이 유지됩니다."]').is_displayed(), "신유클 공지사항 미노출"
         # 신유클 공지사항 노출 확인
 
     def test_case_09(self) -> None:
-        sleep(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnConfirm').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnYes').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/ivHeader').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/bcClose').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
-        # 신세계 유니버스 클럽 가입 계정정보
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserPw').send_keys('Qa1324!@#')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnLogin').click()
-        self.driver.implicitly_wait(5)
+        Common_splash.Splash(self)
+        Common_Login.Login(self)
         self.driver.find_element(By.XPATH, '//android.view.View[@content-desc="고객님께 1년동안 멤버십VIP 혜택이 유지됩니다."]').click()
         self.driver.implicitly_wait(3)
         assert self.driver.find_element(By.ID, 'kr.co.ssg:id/tvTitle').is_displayed(), "유니버스 클럽 스탬프 페이지 랜딩 실패"
@@ -196,21 +101,8 @@ class TestAppium(unittest.TestCase):
 
 
     def test_case_10(self) -> None:
-        sleep(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnConfirm').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnYes').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/ivHeader').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/bcClose').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
-        # 신세계 유니버스 클럽 가입 계정정보
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserPw').send_keys('Qa1324!@#')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnLogin').click()
-        self.driver.implicitly_wait(5)
+        Common_splash.Splash(self)
+        Common_Login.Login(self)
         el = self.driver.find_element(By.ID, 'm_content')
         text = el.text
         assert 'SSG에서' in text
@@ -222,21 +114,8 @@ class TestAppium(unittest.TestCase):
 
 
     def test_case_11(self) -> None:
-        sleep(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnConfirm').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnYes').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/ivHeader').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/bcClose').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
-        # 신세계 유니버스 클럽 가입 계정정보
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserPw').send_keys('Qa1324!@#')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnLogin').click()
-        self.driver.implicitly_wait(5)
+        Common_splash.Splash(self)
+        Common_Login.Login(self)
         self.driver.find_element(By.PARTIAL_LINK_TEXT, 'SSG').click()
         self.driver.implicitly_wait(3)
         assert self.driver.find_element(By.ID, 'kr.co.ssg:id/tvTitle').is_displayed(), "나의 신세계 유니버스 클럽 헤택 페이지 랜딩 실패"
@@ -245,15 +124,7 @@ class TestAppium(unittest.TestCase):
 
 
     def test_case_12(self) -> None:
-        sleep(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnConfirm').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnYes').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/ivHeader').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/bcClose').click()
-        self.driver.implicitly_wait(3)
+        Common_splash.Splash(self)
         self.driver.find_element(By.ID, 'kr.co.ssg:id/vSearchQuery').click()
         el3 = self.driver.find_element(by=AppiumBy.ACCESSIBILITY_ID, value="검색")
         el3.click()
@@ -940,24 +811,8 @@ class TestAppium(unittest.TestCase):
     
 
     def test_case_42(self) -> None:
-        sleep(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnConfirm').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'com.android.permissioncontroller:id/permission_allow_button').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/btnYes').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/ivHeader').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/bcClose').click()
-        self.driver.implicitly_wait(3)
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/vSearchQuery').click()
-        el3 = self.driver.find_element(by=AppiumBy.ACCESSIBILITY_ID, value="검색")
-        el3.click()
-        el4 = self.driver.find_element(by=AppiumBy.ID, value="kr.co.ssg:id/etSearchQuery")
-        el4.send_keys("티셔츠 "+"\n")
-        self.driver.press_keycode(66)
-        #el5 = self.driver.find_element(by=AppiumBy.ID, value="kr.co.ssg:id/tvKeyword")
-        #el5.click()
-        self.driver.implicitly_wait(3)
+        Common_splash.Splash(self)
+        Common_Search.Search_Clothes(self)
         self.driver.find_element(By.XPATH, '//android.widget.Button[@content-desc="브랜드 필터"]').click()
         assert self.driver.find_element(By.ID, 'kr.co.ssg:id/tvBadge').is_displayed(), "브랜드필터 인기 뱃지 확인 실패"
         # 바텀시트 브랜드 필터 인기 브랜드 뱃지 노출 확인
