@@ -34,6 +34,7 @@ class TestAppium(unittest.TestCase):
     def test_case_01(self) -> None:
         Common_splash.splash(self)
 
+
         self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
         # 신세계 유니버스 클럽 가입 계정정보
         self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
