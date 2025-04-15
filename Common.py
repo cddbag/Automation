@@ -1,9 +1,9 @@
 from appium.webdriver.common.appiumby import AppiumBy
 from selenium.webdriver.common.by import By
+from cryptography.fernet import Fernet
 from time import sleep
 from appium.webdriver.common.touch_action import TouchAction
 from selenium.common.exceptions import NoSuchElementException
-
 
 from appium.options.android import UiAutomator2Options
 
@@ -20,9 +20,16 @@ class Common():
         self.driver.implicitly_wait(1)
 
     def Login(self) -> None:
+        # 키, id, pw는 별도 관리
+        key = b'generated_key'
+        encrypted_id = b'encrpted_id'
+        encrypted_pw = b'encrypted_pw'
+        cipher = Fernet(key)
+        user_id = cipher.decrypt(encrypted_id).decode()
+        user_pw = cipher.decrypt(encrypted_pw).decode()
         self.driver.find_element(By.ID, 'kr.co.ssg:id/btnMySSG').click()
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys('cddbag')
-        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserPw').send_keys('Qa1324!@#')
+        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserId').send_keys(user_id)
+        self.driver.find_element(By.ID, 'kr.co.ssg:id/etUserPw').send_keys(user_pw)
         self.driver.find_element(By.ID, 'kr.co.ssg:id/btnLogin').click()
         self.driver.implicitly_wait(5)
 
