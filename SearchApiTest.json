@@ -175,7 +175,7 @@
 							"",
 							"if (modifiedBody) {",
 							"    let bodyObj = JSON.parse(modifiedBody);",
-							"    bodyObj.siteNo = \"9999\"; // 문자열 또는 숫자로 맞춰서 넣어주세요",
+							"    bodyObj.siteNo = \"9999\";",
 							"",
 							"    pm.sendRequest({",
 							"        url: pm.request.url.toString(),",
