@@ -1,0 +1,236 @@
+{
+	"info": {
+		"_postman_id": "f7f2e58a-75b9-4ea8-848d-4bf6789ac98f",
+		"name": "New Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "16585236"
+	},
+	"item": [
+		{
+			"name": "추천/연관 검색어",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"const srchrlList = [\"신라면\", \"오징어짬뽕\", \"건면\", \"짜파게티\", \"신라면투움바\", \"진라면\", \"안성탕면\", \"신라면더레드\", \"농심라면\", \"블랙신라면\", \"너구리\", \"신라면블랙\", \"신라면건면\", \"열라면\"]",
+							"",
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"검색어 수정 확인\", function() {",
+							"    pm.expect(jsonData.data.dataList[0].mainDesc).to.eql(\"'신라면'(으)로 수정된 결과입니다.\");",
+							"    pm.expect(jsonData.data.dataList[0].subDesc).to.eql(\"'신라먼' 검색 결과 보기\");",
+							"})",
+							"",
+							"pm.test(\"연관검색어 노출 확인\", function() {",
+							"    console.log(srchrlList)",
+							"    pm.expect(jsonData.data.dataList[1].srchrlList[0].text).to.oneOf(srchrlList);",
+							"    pm.expect(jsonData.data.dataList[1].srchrlList[1].text).to.oneOf(srchrlList);",
+							"    pm.expect(jsonData.data.dataList[1].srchrlList[2].text).to.oneOf(srchrlList);",
+							"})",
+							"",
+							"pm.test(\"ModelInfo 코드 확인\", function() {",
+							"    const list = jsonData.data.dataList[1].srchrlList;",
+							"    console.log(list)",
+							"    const allMatched = list.every(item => item.modelInfo === \"SRSW34\");",
+							"    pm. expect(allMatched).to.eql(true);",
+							"})",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"siteNo\": \"6005\",\n    \"query\": \"신라먼\",\n    \"count\": \"40\",\n    \"aplTgtMediaCd\": \"10\",\n    \"typoErrorYn\": \"N\",\n    \"shpp\": \"\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://search.ssg.com/api/srch/info",
+					"protocol": "https",
+					"host": [
+						"search",
+						"ssg",
+						"com"
+					],
+					"path": [
+						"api",
+						"srch",
+						"info"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "검색결과 오름차순 정렬",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"const productList = jsonData.data.dataList[3].dataList;",
+							"",
+							"pm.test(\"가격 오름차순 정렬 동작 확인\", () => {",
+							"    for (let i = 0; i < productList.length - 1; i++) {",
+							"        const currentPrice = parseInt(productList[i].displayPrc);",
+							"        const nextPrice = parseInt(productList[i + 1].displayPrc);",
+							"",
+							"        console.log(`index ${i}의 가격: ${currentPrice}, index ${i + 1}의 가격: ${nextPrice}`);",
+							"",
+							"        pm.expect(currentPrice, `index ${i}의 가격`).to.be.at.most(nextPrice);",
+							"    }",
+							"});",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"siteNo\": \"6005\",\n    \"query\": \"우유\",\n    \"page\": 1,\n    \"target\": \"pc_item\",\n    \"aplTgtMediaCd\": \"10\",\n    \"count\": \"40\",\n    \"directYn\": \"N\",\n    \"sort\": \"prcasc\",\n    \"recomSortYn\": \"recom_prcasc\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://search.ssg.com/api/item/all",
+					"protocol": "https",
+					"host": [
+						"search",
+						"ssg",
+						"com"
+					],
+					"path": [
+						"api",
+						"item",
+						"all"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "\b가격 구간 필터 동작",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"const jsonData = pm.response.json();",
+							"const productList = jsonData.data.dataList[3].dataList;",
+							"",
+							"pm.test(\"가격 구간 필터 동작 확인\", () => {",
+							"    for (let i = 3; i < productList.length; i++) {",
+							"        const price = parseInt(productList[i].displayPrc);",
+							"",
+							"        console.log(`index ${i}의 가격: ${price}`);",
+							"",
+							"        pm.expect(price, `index ${i}의 가격`).to.be.within(1000,3000);",
+							"    }",
+							"});",
+							"",
+							"const originalRequest = pm.request.clone();",
+							"const modifiedBody = originalRequest.body ? originalRequest.body.raw : null;",
+							"",
+							"if (modifiedBody) {",
+							"    let bodyObj = JSON.parse(modifiedBody);",
+							"    bodyObj.siteNo = \"9999\"; // 문자열 또는 숫자로 맞춰서 넣어주세요",
+							"",
+							"    pm.sendRequest({",
+							"        url: pm.request.url.toString(),",
+							"        method: pm.request.method,",
+							"        header: pm.request.headers,",
+							"        body: {",
+							"            mode: \"raw\",",
+							"            raw: JSON.stringify(bodyObj),",
+							"            options: {",
+							"                raw: {",
+							"                    language: \"json\"",
+							"                }",
+							"            }",
+							"        }",
+							"    }, function (err, res) {",
+							"        pm.test(\"비유효한 siteNo 테스트\", function () {",
+							"            const resjson = res.json();",
+							"            pm.expect(resjson.data).to.be.null;",
+							"        });",
+							"    });",
+							"}"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"siteNo\": \"6004\",\n    \"query\": \"우유\",\n    \"page\": 1,\n    \"target\": \"all\",\n    \"aplTgtMediaCd\": \"10\",\n    \"count\": \"40\",\n    \"directYn\": \"N\",\n    \"minPrc\": \"1000\",\n    \"maxPrc\": \"3000\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://search.ssg.com/api/item/all",
+					"protocol": "https",
+					"host": [
+						"search",
+						"ssg",
+						"com"
+					],
+					"path": [
+						"api",
+						"item",
+						"all"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
